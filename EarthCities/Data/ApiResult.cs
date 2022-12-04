@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Reflection;
 using System.Threading.Tasks;
+using WorldCities.Data;
 
 namespace EarthCities.Data
 {
@@ -48,6 +49,8 @@ namespace EarthCities.Data
 
 
 			source = source.Skip(pageIndex * pageSize).Take(pageSize);
+
+			var sql = source.ToParametrizedSql(); // retrieve the SQL query(for debug only)
 
 			var data = await source.ToListAsync();
 
