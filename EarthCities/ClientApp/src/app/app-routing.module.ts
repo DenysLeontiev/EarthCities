@@ -5,6 +5,7 @@ import { CityEditComponent } from './city-edit/city-edit.component';
 import { CountriesComponent } from './countries/countries.component';
 import { CountryEditComponent } from './country-edit/country-edit.component';
 import { HomeComponent } from './home/home.component';
+import { LinearChartComponent } from './linear-chart/linear-chart.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'city', component: CityEditComponent },
   { path: 'country/:id', component: CountryEditComponent },
   { path: 'country', component: CountryEditComponent },
+  { path: 'chart', component: LinearChartComponent },
 ];
 
 @NgModule({

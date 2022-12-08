@@ -24,7 +24,7 @@ namespace EarthCities.Data
 			FilterQuery = filterQuery;
 		}
 
-		public static async Task<ApiResult<T>> CreateAsync(IQueryable<T> source,int pageIndex, int pageSize, string sortColumn = null, string sortOrder = null, string filterColumn = null, string filterQuery = null)
+		public static async Task<ApiResult<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize, string sortColumn = null, string sortOrder = null, string filterColumn = null, string filterQuery = null)
 		{
 			if (!string.IsNullOrEmpty(filterColumn) && !string.IsNullOrEmpty(filterQuery) && IsValidProperty(filterColumn))
 			{
@@ -50,8 +50,11 @@ namespace EarthCities.Data
 
 			source = source.Skip(pageIndex * pageSize).Take(pageSize);
 
-			var sql = source.ToParametrizedSql(); // retrieve the SQL query(for debug only)
-
+			#if DEBUG
+			{
+				var sql = source.ToParametrizedSql(); // retrieve the SQL query(for debug only)
+			}
+			#endif
 			var data = await source.ToListAsync();
 
 			return new ApiResult<T>(data, count, pageIndex, pageSize, sortOrder, sortColumn, filterColumn, filterQuery);

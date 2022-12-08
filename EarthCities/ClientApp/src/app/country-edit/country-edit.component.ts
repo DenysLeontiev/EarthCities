@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, AbstractControl, AsyncValidatorFn } from '@angular/forms';
@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Country } from '../_models/country';
 import { BaseformComponent } from '../baseform/baseform.component';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { BaseformComponent } from '../baseform/baseform.component';
   templateUrl: './country-edit.component.html',
   styleUrls: ['./country-edit.component.css']
 })
-export class CountryEditComponent extends BaseformComponent implements OnInit {
+export class CountryEditComponent extends BaseformComponent implements OnInit, OnDestroy {
 
   // the view title
   title: string;
@@ -28,6 +29,9 @@ export class CountryEditComponent extends BaseformComponent implements OnInit {
   // It's NULL when we're adding a new country,
   // and not NULL when we're editing an existing one.
   id?: number;
+  private subscription: Subscription = new Subscription();
+
+  activityLog: string;
 
   constructor(
     private fb: FormBuilder,
@@ -61,7 +65,32 @@ export class CountryEditComponent extends BaseformComponent implements OnInit {
       ]
     });
 
+    this.subscription.add(this.form.valueChanges.subscribe((response) => {
+      if (!this.form.dirty) {
+        this.log("Form was loaded");
+      }
+      else {
+        this.log("Form was modified");
+      }
+    }));
+
+    this.subscription.add(this.form.get("name").valueChanges.subscribe((response) => {
+      if (!this.form.dirty) {
+        this.log("Form Name was loaded");
+      } else {
+        this.log("Form Name was modified by a user");
+      }
+    }));
+
     this.loadData();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  log(str: string) {
+    this.activityLog += "[" + new Date().toLocaleString() + "]" + str + "<br />";
   }
 
   loadData() {

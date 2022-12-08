@@ -14,6 +14,7 @@ import { AngularMaterialModule } from './angular-material/angular-material.modul
 import { CountriesComponent } from './countries/countries.component';
 import { CityEditComponent } from './city-edit/city-edit.component';
 import { CountryEditComponent } from './country-edit/country-edit.component';
+import { LinearChartComponent } from './linear-chart/linear-chart.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { CountryEditComponent } from './country-edit/country-edit.component';
     CountriesComponent,
     CityEditComponent,
     CountryEditComponent,
+    LinearChartComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

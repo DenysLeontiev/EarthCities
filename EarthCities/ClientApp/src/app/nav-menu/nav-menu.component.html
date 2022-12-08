@@ -38,6 +38,13 @@
             <a class="nav-link text-dark" [routerLink]="['/countries']">Countries</a>
           </li>
         </ul>
+        <ul class="navbar-nav flex-grow">
+          <li class="nav-item"
+              [routerLinkActive]="['link-active']"
+              [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link text-dark" [routerLink]="['/chart']">Chart</a>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>

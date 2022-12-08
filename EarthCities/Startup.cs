@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace EarthCities
 {
@@ -78,6 +79,8 @@ namespace EarthCities
 					spa.UseAngularCliServer(npmScript: "start");
 				}
 			});
+
+			app.UseSerilogRequestLogging();
 		}
 	}
 }
